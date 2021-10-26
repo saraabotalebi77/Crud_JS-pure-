@@ -113,6 +113,7 @@ div.table-box table thead tr th{
 /* style for swal.fire in js*/
 .swal2-container.swal2-center>.swal2-popup{
     font-size: 13px;
+    width : 36% !important;
 }
 .style-icon{
     font-size : 12px;
@@ -175,9 +176,6 @@ div.table-box table thead tr th{
         }
     }
     @media screen and (max-width: 450px){
-        .swal2-container.swal2-center>.swal2-popup{
-            width : 40% !important;
-        }
         .form-information .box-form input , .form-information .box-form label , .form-information .box-form button , .form-information .box-form .validate{
             margin-right : 10px;
         }

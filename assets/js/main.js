@@ -9,6 +9,20 @@ let informationUser = new Array();
 
 const emailPattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const phonePattern = /^(\+98|0)?9\d{9}$/;
+async function checkInformation(text,icon){
+    let result = await Swal.fire({
+        text: `${text}`,
+        icon: `${icon}`,
+        customClass:{
+                icon : 'style-icon',
+            },
+            allowEnterKey: false,
+            showCancelButton: true,
+            confirmButtonText: 'بله',
+            cancelButtonText: 'خیر',
+        });
+        return(result.isConfirmed);
+    }
 function removeUser(event)
 {
     let removeUser = event.target.parentElement.parentElement;
@@ -44,20 +58,7 @@ function editUser(event)
 
     btnEdit.addEventListener("click",function(e){
         e.preventDefault();
-        async function checkEditUser(){
-            let result = await Swal.fire({
-                text: 'اطلاعات ویرایش شود ؟',
-                icon: 'warning',
-                customClass:{
-                        icon : 'style-icon',
-                    },
-                    allowEnterKey: false,
-                    showCancelButton: true,
-                    confirmButtonText: 'بله',
-                    cancelButtonText: 'خیر',
-                });
-            return(result.isConfirmed)};
-        checkEditUser().then((data)=>{
+        checkInformation("اطلاعات ویرایش شود ؟",'warning').then((data)=>{
                 if(data){
                     for(let i=0 ; i<informationUser.length ; i++)
                     {
@@ -127,31 +128,17 @@ btnSubmit.addEventListener("click",function(e){
             icon = 'warning';
             text = "این اطلاعات قبلا دخیره شده است! ذخیره شود ؟";
         }
-        async function checkInformation(){
-            let result = await Swal.fire({
-                text: `${text}`,
-                icon: `${icon}`,
-                customClass:{
-                        icon : 'style-icon',
-                    },
-                    allowEnterKey: false,
-                    showCancelButton: true,
-                    confirmButtonText: 'بله',
-                    cancelButtonText: 'خیر',
-                });
-                return(result.isConfirmed);
+        checkInformation(text,icon).then((data)=>{
+            if(data)
+            {
+                informationUser.push({firstName:`${firstName}`,lastName:`${lastName}`,email:`${email}`,phoneNumber:`${phoneNumber}`});
+                tbodyTable.insertAdjacentHTML("beforeend",newUser);
             }
-            checkInformation().then((data)=>{
-                if(data)
-                {
-                    informationUser.push({firstName:`${firstName}`,lastName:`${lastName}`,email:`${email}`,phoneNumber:`${phoneNumber}`});
-                    tbodyTable.insertAdjacentHTML("beforeend",newUser);
-                }
-                document.getElementById("firstName").value = null;
-                document.getElementById("lastName").value = null;
-                document.getElementById("email").value = null;
-                document.getElementById("phoneNumber").value = null;
-            });
+            document.getElementById("firstName").value = null;
+            document.getElementById("lastName").value = null;
+            document.getElementById("email").value = null;
+            document.getElementById("phoneNumber").value = null;
+        });
            
     }
     else{
