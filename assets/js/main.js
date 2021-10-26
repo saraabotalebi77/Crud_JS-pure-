@@ -1,5 +1,6 @@
 let btnSubmit = document.getElementById("btn-submit");
 let btnEdit = document.getElementById("btn-edit");
+let divTitle = document.getElementById("title-box");
 let tbodyTable = document.getElementById("tbodyTable");
 let validFirstName = document.getElementById("valid-firstName");
 let validLastName = document.getElementById("valid-lastName");
@@ -9,6 +10,7 @@ let informationUser = new Array();
 
 const emailPattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const phonePattern = /^(\+98|0)?9\d{9}$/;
+
 async function checkInformation(text,icon){
     let result = await Swal.fire({
         text: `${text}`,
@@ -23,6 +25,7 @@ async function checkInformation(text,icon){
         });
         return(result.isConfirmed);
     }
+
 function removeUser(event)
 {
     let removeUser = event.target.parentElement.parentElement;
@@ -42,8 +45,10 @@ function removeUser(event)
         }
     }
 }
+
 function editUser(event)
 {
+    divTitle.innerHTML = "ویرایش اطلاعات"
     btnSubmit.style.display ="none";
     btnEdit.style.display = "block";
     let editUser = event.target.parentElement.parentElement;
@@ -83,6 +88,7 @@ function editUser(event)
                 document.getElementById("phoneNumber").value = null;
                 btnSubmit.style.display ="block";
                 btnEdit.style.display = "none";
+                divTitle.innerHTML = "ایجاد حساب کاربری";
             });
     })
 }
