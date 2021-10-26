@@ -8,6 +8,14 @@ let validEmail = document.getElementById("valid-email");
 let validPhoneNumber = document.getElementById("valid-phoneNumber");
 let informationUser = new Array();
 
+
+let objLocalStorageUser = JSON.parse(localStorage.getItem("userInformation"));
+
+document.getElementById("firstName").value = objLocalStorageUser.firstName;
+document.getElementById("lastName").value = objLocalStorageUser.lastName;
+document.getElementById("email").value = objLocalStorageUser.email;
+document.getElementById("phoneNumber").value = objLocalStorageUser.phoneNumber;
+
 const emailPattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const phonePattern = /^(\+98|0)?9\d{9}$/;
 
@@ -137,7 +145,9 @@ btnSubmit.addEventListener("click",function(e){
         checkInformation(text,icon).then((data)=>{
             if(data)
             {
-                informationUser.push({firstName:`${firstName}`,lastName:`${lastName}`,email:`${email}`,phoneNumber:`${phoneNumber}`});
+                let user = {firstName:`${firstName}`,lastName:`${lastName}`,email:`${email}`,phoneNumber:`${phoneNumber}`};
+                localStorage.setItem("userInformation",JSON.stringify(user));
+                informationUser.push(user);
                 tbodyTable.insertAdjacentHTML("beforeend",newUser);
             }
             document.getElementById("firstName").value = null;
